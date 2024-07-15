@@ -1,0 +1,45 @@
+name: Deploy API
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Deploy to VM
+      env:
+        SSH_KEY: MIIG5AIBAAKCAYEAyZATzzP0YroybE21gXRy9DTGlZ8UUSg0pimP02qGZmJWTHasv+UtcmYFC/H03MHGxipPzya1VB3nEPO5i1S3JnCMgEzRx0E3AI47R+N8M0V7bRQLGJKXNUZDb90dtxVrwpCFNIQ30Hje48EljVQDK3eXE7e+oRP+Xh1o4Y0EdlCfHWr/xSmVsbt6MGZOHUOnpkhYP1fERZPi4k25MC+ut/ftAE9wNM1tbzbTW9MSuoePWaXxhTq9c8UhMwHplhIrutYCBdGAtTAexGS3Qut/OFY2nWRLx9/0SEjXyVWoM5Gk9ASrQHtTR64JAtm2GczCTD/67MJP78OjyjECf1PyaKp5zLU8M0LYOevP8i5zrmbHbAqcgCcd0lnCF4Xm5iDRP/ezdgfUpJmR3If/5XkbaUM7ldEzUO+H59Tuc+51ED066lH1MBt5v3awBGsk1nwxL8feQNnUC4ieWo2MpD4rL7f67QBh03peht3xzSOaF8VT9MlBotlCDq56J/pvV9LZAgMBAAECggGBAMiY2g4hj7tdwWbl45ilku4VQ/mOK0Mlt1gTDu+CGaX1ghtxFDWaWKN8gtNDhsTZGQEJBQqNZHMFm3vUg7j1o5ze8AWT7kbWUW39H2RJMsc4BEEnbG+VHGVJuz2uGq+l4uvstpTwbTfNw015YO0JSmpNB475E//tDP8PV9z5YhJ55BD79vZ6j18lzNI0TtNzDHtBjonjyBLSvj8oyP/6xHCUjkr7xBjYxWukba76Hq6C0RiQPRCxx/BapNLFuXnAM/8A2ofzebieosL1jHMAW/fyVSQVTSF4S6s4T0RSidYPPTNChKj6kPwzs9bvKV8AChigS7FZXRtUqJo5pd5pOo8xz/vojAwXSKSI98dS59dslVQMmUZnsBgJW2ixHz8AQdQC/Eu1h44Djqexl+cQ+1Eu/LtejmI7HYP+daX4mcoIFuhqM6pAqNEGPeTq95fucr9zMG89cCDhyqz0WDWI6rdsVCmkdPCsG1A0TEgQ8ZLGutIts8ueLV94fKaKCaYMPQKBwQDlSmNe0m0J0M3I3g+DWjGeYe4gQmOks9sKc64cMhyO0VwlU8Ml9/35wWcrDWOZ1k7K40pqsta1sd/DQ/mzjtjyght1klFTdZIDmIQkzMpM2dEmJtSh6Ecpw/wgV0UfDpdKOqx5Ipfwbr0Ou/3Ri9luhGXMHDSmWTCG/RWQULMwLWQGYYf7FumjPJ0f+v+1mmxCOtAO9x9YxhxKxrKnF1v+wYaZ3wqy0xiNh6uFq2eMRjql1ucSxhB+KuQvLo1jeEMCgcEA4QrTpfzWQjFcaehNuvTbWfW9LmQw93I100PjkcpNXwPyRmSK0PUsh00YvolvaidgOiAzOz7VrWkFx28ny5zPOvmjBmSqTjfx5mv9rpNP69eezU9tKFV10XVLz8ftRD7ElvdW+f/fAQ+8ATmjhahtcLfFPByVkUzs3oKE64UsDkBvXdxin5+UkwA8Qdp/pqlLMtHPX6XI2BI08r9Wo61JW/4E/Qh0HffxnuQUK9cxDPMSgbjpW1e/ZEWiGpqHbJSzAoHAC3GuCgKIrK++RaNHtO+ggF4062lE3eiYKypg60lZAYvThI1stQ1uoLOVeaGecgQvRJMZmL+6VbE+ENnosZyUmW4C/thBtN+uXP2Uwt1xz2ojtTrE7BvSyXPdtqOEcKtiw7Kv/w/J85cjWoPphDbtsEVta0WRHyhecq5ZEC3m86WgU200w0R+fsY8tWbqsl61vox+6/BLoTuqF9VY/1v8HHf+RtnKB+jfVdkKp45JicfLj5FtUROPqSxs3Sn+ppNPAoHBAMIVPU2VTg/OVF4+a/NGQ3tFVUASRqzRwhwPG8/bgnjkhWkyQwpNuHaEBkglbYJGrVXT+XsqCMzCm6pRcifHeG3raC8WWE6XLzfDgQizoaTL0/hLfN/hPHhFyflL+pP18kQk0s1PYDuhH0qLND0Mcj5ZL3BVUqT6i/qm5A3fT4yHA8UWUbRKw68377/3ukm5DdKpYkiiSSIYKbQFUqpcw7zjydeUF9jUwnx/Reo9b980L4zTNeaCOd03tMNu7Ea3wwKBwBFR74LYlX+BaHDWw+11AsM17gYLZpPoCwaXiV9yiTyWjAuP1BL24GXsxI2EcqjX9OKNTKChkkmdaNI3L1EfdzqoG2BywIggxbNIZqFssmWHffex1XpqRb35Z2t/0MP+JJuAb6kcZRy3Bv9fT7cGPMi9Jp/HRXoLxkt25xkLroyLvNY30VYDzyBfTQ51KZPbc3XZroDboIQyMsbivDFd4p7KwGJQWiJs20K8fLfwunoVS0kpI94mHfTIASJ/m5uu3Q==
+        SSH_USER: azureuser
+        SSH_HOST: 172.178.90.134
+      run: |
+        echo "$SSH_KEY" | tr -d '\r' > deploy_key
+        chmod 600 deploy_key
+        ssh -i deploy_key -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+          sudo apt-get update
+          sudo apt-get install -y python3-venv
+          cd /path/to/your/project
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          sudo fuser -k 80/tcp || true
+          nohup python app.py &
+        EOF
+
